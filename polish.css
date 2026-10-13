@@ -1,0 +1,354 @@
+/* ============================================================
+   汰换模拟 v1.0 · 高保真润色层
+   仅调整外壳视觉与微交互，不改变页面布局 / 排版 / 文字 / 交互。
+   ============================================================ */
+
+/* ---------- 基础 ---------- */
+html, body, #app, .desktop-container {
+  height: 100%;
+}
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #10141d;
+}
+
+/* ---------- 画布背景 ---------- */
+.preview-view-port {
+  background:
+    radial-gradient(1100px 700px at 50% -8%, #283148 0%, rgba(40, 49, 72, 0) 60%),
+    radial-gradient(900px 600px at 85% 110%, #1b2740 0%, rgba(27, 39, 64, 0) 55%),
+    linear-gradient(160deg, #1b2130 0%, #121722 55%, #0e121b 100%) !important;
+}
+
+/* ---------- 隐藏开发者工具外壳 ---------- */
+.preview-tool-bar,
+.search-bar,
+.split-dragger,
+.right-remark-panel,
+.preview-navigation-panel,
+.hide-zoomer,
+.dsm-c-rp-zoomer,
+.remark-tag {
+  display: none !important;
+}
+
+/* ---------- 左侧导航侧栏 ---------- */
+.preview-controller-panel {
+  width: 276px !important;
+  min-width: 276px !important;
+  background: linear-gradient(180deg, #1d2330 0%, #171c27 100%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  color: #e8ecf3 !important;
+}
+
+.preview-controller-panel .content {
+  padding-top: 6px;
+}
+
+.polish-sidebar-header {
+  flex: 0 0 auto;
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  user-select: none;
+}
+.polish-sidebar-header .polish-logo {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.polish-sidebar-header .polish-logo::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #0a84ff;
+  box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.18);
+  display: inline-block;
+}
+.polish-sidebar-header .polish-sub {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #7d879b;
+  letter-spacing: 0.2px;
+}
+.polish-sidebar-footer {
+  flex: 0 0 auto;
+  padding: 12px 20px;
+  font-size: 11px;
+  color: #5c6678;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  line-height: 1.6;
+  user-select: none;
+}
+
+.preview-controller-panel .tree-item {
+  margin: 1px 10px;
+}
+.preview-controller-panel .tree-item .main-content {
+  height: 38px !important;
+  line-height: 38px !important;
+  border-radius: 10px;
+  color: #cdd4e0 !important;
+  padding-left: 12px !important;
+  min-width: 0 !important;
+  transition: background-color 0.16s ease, color 0.16s ease;
+}
+.preview-controller-panel .tree-item .main-content:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff !important;
+}
+.preview-controller-panel .tree-item .main-content.selected {
+  background: linear-gradient(90deg, #0a84ff 0%, #1677ff 100%);
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(10, 132, 255, 0.28);
+}
+.preview-controller-panel .tree-item .item-name,
+.preview-controller-panel .tree-item .item-name span {
+  color: inherit !important;
+  font-weight: 500;
+}
+.preview-controller-panel .tree-item .group-num {
+  color: #778096 !important;
+  font-weight: 400;
+}
+.preview-controller-panel .tree-item .main-content.selected .group-num {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+.preview-controller-panel .dsm-c-rp-icon,
+.preview-controller-panel .mockplus_rp {
+  color: #778096;
+}
+.preview-controller-panel .main-content.selected .dsm-c-rp-icon,
+.preview-controller-panel .main-content.selected .mockplus_rp {
+  color: #ffffff;
+}
+
+/* ---------- 手机机身相框 ---------- */
+.scale-box.mobile {
+  border-radius: 34px !important;
+  box-shadow:
+    0 0 0 10px #05070c,
+    0 0 0 11px rgba(255, 255, 255, 0.08),
+    0 26px 60px rgba(0, 0, 0, 0.55),
+    0 8px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ---------- 页面渲染质感 ---------- */
+.preview-page,
+.preview-page * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- 微交互 ---------- */
+[class*="has-interaction"],
+.item-hot-area,
+.component-cursor-pointer,
+.hot-area {
+  cursor: pointer;
+}
+.component.has-interaction:active > * {
+  opacity: 0.82;
+}
+.lib-comp-input input {
+  transition: box-shadow 0.16s ease;
+}
+.lib-comp-input input:focus {
+  box-shadow: inset 0 0 0 2px rgba(10, 132, 255, 0.65) !important;
+}
+
+/* ---------- 加载动画 ---------- */
+#polish-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: linear-gradient(160deg, #1b2130 0%, #121722 100%);
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+#polish-loader.done {
+  opacity: 0;
+  visibility: hidden;
+}
+#polish-loader .ring {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.12);
+  border-top-color: #0a84ff;
+  animation: polish-spin 0.9s linear infinite;
+}
+#polish-loader .label {
+  color: #9aa3b5;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+@keyframes polish-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- 手机端悬浮页面导航 ---------- */
+.polish-fab {
+  position: fixed;
+  right: 18px;
+  bottom: 26px;
+  z-index: 99990;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #0a84ff 0%, #1677ff 100%);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(10, 132, 255, 0.4);
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.polish-fab:active {
+  transform: scale(0.94);
+}
+.polish-fab svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.polish-nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99980;
+  background: rgba(8, 11, 16, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+.polish-nav-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+.polish-nav-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 78%;
+  background: #181e29;
+  border-radius: 22px 22px 0 0;
+  box-shadow: 0 -18px 50px rgba(0, 0, 0, 0.5);
+  transform: translateY(100%);
+  transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+  display: flex;
+  flex-direction: column;
+}
+.polish-nav-overlay.open .polish-nav-panel {
+  transform: translateY(0);
+}
+.polish-nav-panel .polish-nav-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.polish-nav-panel .polish-nav-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.4px;
+}
+.polish-nav-panel .polish-nav-close {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #cdd4e0;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+.polish-nav-list {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 14px 18px;
+}
+.polish-nav-group {
+  color: #667086;
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 12px 8px 6px;
+}
+.polish-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 12px;
+  margin: 2px 0;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: #e8ecf3;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.polish-nav-item:active {
+  background: rgba(255, 255, 255, 0.08);
+}
+.polish-nav-item.active {
+  background: linear-gradient(90deg, #0a84ff 0%, #1677ff 100%);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(10, 132, 255, 0.25);
+}
+.polish-nav-item .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.45;
+  flex: 0 0 auto;
+}
+.polish-nav-item.child {
+  padding-left: 28px;
+  font-size: 14px;
+  color: #aeb7c8;
+}
+
+/* ---------- 窄屏适配：收起侧栏、手机全屏、显示悬浮导航 ---------- */
+@media (max-width: 900px) {
+  .preview-controller-panel {
+    display: none !important;
+  }
+  .preview-view-port {
+    width: 100% !important;
+    background: #000 !important;
+  }
+  .scale-box.mobile {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .polish-fab {
+    display: flex;
+  }
+}
